@@ -32,3 +32,23 @@ int maxProfit(vector<int>& prices) {
         }
         return max(ans,0);
 }
+
+// partition equal subset-sum
+bool canPartition(vector<int>& nums) {
+        int n = nums.size();
+        int total = 0;
+        for(auto x:nums)total+=x;
+        if(total&1)return false;
+        int sum = total/2;
+        vector<bool> dp(sum+1,false);
+        dp[0] = true;
+        for(auto x:nums)
+        {
+            for(int i=sum;i >= x;i--)// observe the order in which we are going to avoid picking same item again...
+            {
+                dp[i] = dp[i-x]|dp[i];
+            }
+        }
+        for(auto x:dp)cout<<x<<" ";cout<<endl;
+        return dp[sum];
+    }
